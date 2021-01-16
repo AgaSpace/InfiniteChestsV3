@@ -3,7 +3,6 @@
 This is a completely rewritten version of MarioE's original InfiniteChests plugin. Most of this plugin was copied or modified from that one.
 
 ### Plugin Features:
-- Saves chests to database, allowing more than 1,000 chests per map.
 - Allows conversion of chest storage to/from database at will.
 - Allows chests to be "claimed" (protected) by users.
 - Allows chests to be "public" (other users can edit but not destroy).
