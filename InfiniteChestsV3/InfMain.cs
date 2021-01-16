@@ -36,7 +36,7 @@ namespace InfiniteChestsV3
 			ServerApi.Hooks.NetGetData.Register(this, OnGetData);
 			ServerApi.Hooks.NetSendData.Register(this, OnSendData);
 			ServerApi.Hooks.NetGreetPlayer.Register(this, OnGreet);
-			ServerApi.Hooks.GamePostInitialize.Register(this, OnWorldLoadAsync);
+			//ServerApi.Hooks.GamePostInitialize.Register(this, OnWorldLoadAsync);
 		}
 
 		protected override void Dispose(bool disposing)
@@ -47,7 +47,7 @@ namespace InfiniteChestsV3
 				ServerApi.Hooks.NetGetData.Deregister(this, OnGetData);
 				ServerApi.Hooks.NetSendData.Deregister(this, OnSendData);
 				ServerApi.Hooks.NetGreetPlayer.Deregister(this, OnGreet);
-				ServerApi.Hooks.GamePostInitialize.Deregister(this, OnWorldLoadAsync);
+				//ServerApi.Hooks.GamePostInitialize.Deregister(this, OnWorldLoadAsync);
 			}
 			base.Dispose(disposing);
 		}
@@ -68,16 +68,6 @@ namespace InfiniteChestsV3
 			Commands.ChatCommands.Add(new Command("ic.convert", ConvChestsAsync, "convchests"));
 			Commands.ChatCommands.Add(new Command("ic.prune", PruneChestsAsync, "prunechests"));
 			Commands.ChatCommands.Add(new Command("ic.transfer", TransferAsync, "transferchests"));
-		}
-
-		private async void OnWorldLoadAsync(EventArgs args)
-		{
-			await Task.Factory.StartNew(() => {
-				lockChests = true;
-				int count = InnerConvChests();
-				TSPlayer.Server.SendInfoMessage("Converted " + count + " chests.");
-				lockChests = false;
-			});
 		}
 
 		private void OnGreet(GreetPlayerEventArgs args)
@@ -959,7 +949,6 @@ namespace InfiniteChestsV3
 						users = new List<int>()
 					};
 					DB.AddChest(chest);
-					Main.chest[i] = null;
 					count++;
 				}
 			}
